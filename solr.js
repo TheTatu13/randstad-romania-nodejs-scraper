@@ -62,6 +62,10 @@ export function getSolrAuth() {
  * @returns {Promise<Object>} - Solr response with numFound and docs array
  */
 export async function querySOLR(cif) {
+  if (isDryRun() && !process.env.SOLR_AUTH) {
+    console.log('[dry-run] no SOLR_AUTH - assuming no existing jobs');
+    return { numFound: 0, docs: [] };
+  }
   const AUTH = getSolrAuth();
 
   const params = new URLSearchParams({

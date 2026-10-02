@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import { fetchWithRetry as fetch, assertCanary } from "./src/premium.js";
 import * as cheerio from "cheerio";
 import fs from "fs";
 import { fileURLToPath } from "url";

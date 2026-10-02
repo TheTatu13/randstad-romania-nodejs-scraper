@@ -238,7 +238,8 @@ export async function upsertJobs(jobs) {
 
   const params = new URLSearchParams({ commit: "true" });
 
-  const body = JSON.stringify(jobs);
+  // Existing docs read back from Solr carry _version_; after deleteJobsByCIF that makes the re-add fail with 409.
+  const body = JSON.stringify(jobs.map(({ _version_, ...doc }) => doc));
 
   const res = await fetch(`${SOLR_URL}/update?${params}`, {
     method: "POST",

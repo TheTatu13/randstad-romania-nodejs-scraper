@@ -1,7 +1,7 @@
 /**
  * Company Data Module — ANAF + CUIScan + CUIFirma
  *
- * Strategy: 1 try demoanaf.ro → 1 try cuiscan.ro → cached data. No retries.
+ * Strategy: 1 try demoanaf.ro → 1 try cuiscan.ro → cached data. demoanaf is never retried; cuiscan/cuifirma retry only when they answer HTML instead of JSON.
  * Search: 1 try demoanaf.ro → 1 try cuifirma.ro.
  */
 
@@ -14,6 +14,24 @@ const CUISCAN_API_URL = "https://cuiscan.ro/api.php";
 const CUISFIRMA_SEARCH_URL = "https://cuifirma.ro/api/search";
 const TIMEOUT_MS = 10000;
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * cuiscan.ro / cuifirma.ro sometimes answer 200 with an HTML page (rate limit / challenge)
+ * instead of JSON. Retry a few times with a growing pause before giving up.
+ */
+async function readJson(doFetch, label, attempts = 3) {
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    const res = await doFetch();
+    if (!res.ok) throw new Error(`${label} error: ${res.status}`);
+    try {
+      return await res.json();
+    } catch (err) {
+      if (attempt === attempts) throw new Error(`${label} returned non-JSON (rate limited?)`);
+      await sleep(1500 * attempt);
+    }
+  }
+}
 // ============================================================================
 // CUIScan — company details fallback
 // ============================================================================
@@ -66,12 +84,10 @@ function mapCuiscanToAnafFormat(data) {
 }
 
 async function fetchFromCuiscan(cif) {
-  const res = await fetch(`${CUISCAN_API_URL}?action=company&cui=${cif}`, {
+  const json = await readJson(() => fetch(`${CUISCAN_API_URL}?action=company&cui=${cif}`, {
     headers: { "User-Agent": userAgent },
     signal: AbortSignal.timeout(TIMEOUT_MS)
-  });
-  if (!res.ok) throw new Error(`CUIScan API error: ${res.status}`);
-  const json = await res.json();
+  }), "CUIScan API");
   if (!json || !json.denumire) throw new Error("CUIScan returned no data");
   return mapCuiscanToAnafFormat(json);
 }
@@ -106,12 +122,10 @@ async function searchFromAnaf(brandName) {
 // ============================================================================
 
 async function searchFromCuifirma(brandName) {
-  const res = await fetch(`${CUISFIRMA_SEARCH_URL}?q=${encodeURIComponent(brandName)}`, {
+  const json = await readJson(() => fetch(`${CUISFIRMA_SEARCH_URL}?q=${encodeURIComponent(brandName)}`, {
     headers: { "User-Agent": userAgent },
     signal: AbortSignal.timeout(TIMEOUT_MS)
-  });
-  if (!res.ok) throw new Error(`CUIFirma search error: ${res.status}`);
-  const json = await res.json();
+  }), "CUIFirma search");
   return (json.results || []).map(r => ({
     cui: String(r.cui),
     name: r.name,

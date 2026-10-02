@@ -163,6 +163,26 @@ describe('scraper/anaf.js', () => {
       expect(mockFetch).toHaveBeenCalledTimes(2);
     });
 
+    it('should retry CUIScan when it answers HTML instead of JSON', async () => {
+      mockFetch
+        .mockResolvedValueOnce(errorResponse(500))
+        .mockResolvedValueOnce({ ok: true, json: async () => { throw new SyntaxError('Unexpected token <'); } })
+        .mockResolvedValueOnce(cuiscanCompanyResponse(CUISCAN_RECORD));
+
+      const data = await anaf.getCompanyFromANAF('39176747');
+
+      expect(data.name).toBe('LSEG BUSINESS SERVICES RM S.R.L.');
+      expect(mockFetch).toHaveBeenCalledTimes(3);
+    });
+
+    it('should give up with a clear error when CUIScan keeps answering HTML', async () => {
+      mockFetch
+        .mockResolvedValueOnce(errorResponse(500))
+        .mockResolvedValue({ ok: true, json: async () => { throw new SyntaxError('Unexpected token <'); } });
+
+      await expect(anaf.getCompanyFromANAF('39176747')).rejects.toThrow(/non-JSON/);
+      expect(mockFetch).toHaveBeenCalledTimes(4);
+    });
     it('should throw when both ANAF and CUIScan fail', async () => {
       mockFetch.mockResolvedValue(errorResponse(500));
 

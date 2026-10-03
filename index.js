@@ -282,7 +282,8 @@ async function main() {
     }));
     const newJobs = uniquePortalJobs.map(job => mapToJobModel(job, cif));
 
-    const allJobs = [...updatedExisting, ...newJobs];
+    // Fresh scrape first: the dedup below keeps the first copy of a URL, so re-scraped jobs must win over stale stored ones.
+    const allJobs = [...newJobs, ...updatedExisting];
     const uniqueJobs = [];
     const urlSet = new Set();
     for (const job of allJobs) {

@@ -64,7 +64,6 @@ describe('company.js', () => {
   let company;
 
   beforeAll(async () => {
-    process.env.SOLR_AUTH = 'test:test';
     fs.mkdirSync("tmp", { recursive: true });
     backupFile(COMPANY_JSON_PATH);
     backupFile(ROOT_COMPANY_JSON_PATH);
@@ -72,7 +71,6 @@ describe('company.js', () => {
   });
 
   afterAll(() => {
-    delete process.env.SOLR_AUTH;
     restoreFile(COMPANY_JSON_PATH);
     restoreFile(ROOT_COMPANY_JSON_PATH);
   });

@@ -78,8 +78,6 @@ jobs:
             echo "Running in LIVE mode (will delete expired jobs)..."
             node --no-deprecation tests/validate-randstad-jobs.js --delete
           fi
-        env:
-          SOLR_AUTH: ${{ secrets.SOLR_AUTH }}
 
   ensure-company-core:
     runs-on: ubuntu-latest
@@ -88,8 +86,6 @@ jobs:
       - uses: actions/checkout@v5
 
       - name: Ensure company exists in company core
-        env:
-          SOLR_AUTH: ${{ secrets.SOLR_AUTH }}
         run: |
           # Load company identity from single source of truth
           CIF=$(jq -r '.cif' config/company.json)
@@ -101,34 +97,43 @@ jobs:
           SCRAPER_FILE=$(jq -r '.scraperFile' config/company.json)
           TODAY=$(date -u +%Y-%m-%d)
 
-          echo "Upserting ${BRAND} (CIF: ${CIF}) into Solr company core..."
-          jq -n \
-            --arg id "$CIF" \
-            --arg company "$LEGAL_NAME" \
-            --arg brand "$BRAND" \
-            --arg website "$WEBSITE" \
-            --arg career "$CAREER" \
-            --arg loc "$DEFAULT_LOC" \
-            --arg today "$TODAY" \
-            --arg scraperFile "$SCRAPER_FILE" \
-            '[{id:$id,company:$company,brand:$brand,status:"activ",location:[$loc],website:[$website],career:[$career],lastScraped:$today,scraperFile:$scraperFile}]' \
-            > company_data.json
+          CIF_PADDED=$(printf "%08d" "$CIF")
 
-          curl -s --user "${SOLR_AUTH}" \
-            "https://solr.peviitor.ro/solr/company/update/json?commit=true" \
-            -X POST \
-            -H "Content-Type: application/json" \
-            --data-binary @company_data.json
+          # Migrated off direct-SOLR + SOLR_AUTH Basic Auth onto api.peviitor.ro,
+          # same as the rest of the fleet. No credential needed.
+          EXISTING=$(curl -s "https://api.peviitor.ro/v1/firme/company/?cif=${CIF_PADDED}" | jq '.data | length')
 
-          FINAL=$(curl -s --user "${SOLR_AUTH}" \
-            "https://solr.peviitor.ro/solr/company/select?q=id:${CIF}&rows=1" | jq '.response.numFound')
+          echo "${BRAND} count in company core: $EXISTING"
 
-          echo "${BRAND} count after upsert: $FINAL"
+          if [ "$EXISTING" -eq "0" ]; then
+            echo "${BRAND} not found - adding to company core..."
+            jq -n \
+              --arg id "$CIF_PADDED" \
+              --arg company "$LEGAL_NAME" \
+              --arg brand "$BRAND" \
+              --arg website "$WEBSITE" \
+              --arg career "$CAREER" \
+              --arg loc "$DEFAULT_LOC" \
+              --arg today "$TODAY" \
+              --arg scraperFile "$SCRAPER_FILE" \
+              '{id:$id,company:$company,brand:$brand,status:"activ",location:[$loc],website:[$website],career:[$career],lastScraped:$today,scraperFile:$scraperFile}' \
+              > company_data.json
+
+            curl -s -X PUT "https://api.peviitor.ro/v1/firme/company/add/" \
+              -H "Content-Type: application/json" \
+              --data-binary @company_data.json
+          else
+            echo "${BRAND} already exists in company core - no action needed"
+          fi
+
+          FINAL=$(curl -s "https://api.peviitor.ro/v1/firme/company/?cif=${CIF_PADDED}" | jq '.data | length')
+
+          echo "${BRAND} count after check: $FINAL"
 
           if [ "$FINAL" -ge "1" ]; then
-            echo "✅ SUCCESS: ${BRAND} is in company core"
+            echo "SUCCESS: ${BRAND} is in company core"
           else
-            echo "❌ FAILED: ${BRAND} still not in company core"
+            echo "FAILED: ${BRAND} still not in company core"
             exit 1
           fi
 
@@ -159,8 +164,6 @@ jobs:
           LEGAL_NAME=$(jq -r '.legalName' config/company.json)
           sed -i "s|<title>Test Report</title>|<title>Pre-scrape: Unit Tests — ${LEGAL_NAME}</title>|;s|<h1 id=\"title\">Test Report</h1>|<h1 id=\"title\">Pre-scrape: Unit Tests — ${LEGAL_NAME}</h1>|" test-report.html
           cp test-report.html docs/test-results/pre-scrape-unit.html || true
-        env:
-          SOLR_AUTH: ${{ secrets.SOLR_AUTH }}
            
       - name: Upload Unit Test Results
         uses: actions/upload-artifact@v7
@@ -175,8 +178,6 @@ jobs:
           LEGAL_NAME=$(jq -r '.legalName' config/company.json)
           sed -i "s|<title>Test Report</title>|<title>Pre-scrape: Integration Tests — ${LEGAL_NAME}</title>|;s|<h1 id=\"title\">Test Report</h1>|<h1 id=\"title\">Pre-scrape: Integration Tests — ${LEGAL_NAME}</h1>|" test-report.html
           cp test-report.html docs/test-results/pre-scrape-integration.html || true
-        env:
-          SOLR_AUTH: ${{ secrets.SOLR_AUTH }}
            
       - name: Upload Integration Test Results
         uses: actions/upload-artifact@v7
@@ -191,8 +192,6 @@ jobs:
           LEGAL_NAME=$(jq -r '.legalName' config/company.json)
           sed -i "s|<title>Test Report</title>|<title>Post-scrape: E2E Tests — ${LEGAL_NAME}</title>|;s|<h1 id=\"title\">Test Report</h1>|<h1 id=\"title\">Post-scrape: E2E Tests — ${LEGAL_NAME}</h1>|" test-report.html
           cp test-report.html docs/test-results/post-scrape.html || true
-        env:
-          SOLR_AUTH: ${{ secrets.SOLR_AUTH }}
            
       - name: Upload E2E Test Results
         uses: actions/upload-artifact@v7
@@ -210,7 +209,6 @@ jobs:
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SOLR_AUTH: ${{ secrets.SOLR_AUTH }}
 
       - name: Upload Consistency Test Results
         uses: actions/upload-artifact@v7

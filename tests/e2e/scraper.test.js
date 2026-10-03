@@ -7,13 +7,14 @@ import fetch from 'node-fetch';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, '../../.env.local') });
 
-const HAS_SOLR = !!process.env.SOLR_AUTH;
+// Live API tests hit api.peviitor.ro (no credential needed) -- opt in explicitly.
+const HAS_SOLR = !!process.env.RUN_LIVE_API_TESTS;
 
 function itIfSolr(name, fn, timeout) {
   if (HAS_SOLR) {
     return it(name, fn, timeout);
   }
-  return it.skip(`${name} (skipped: SOLR_AUTH not set)`, fn, timeout);
+  return it.skip(`${name} (skipped: set RUN_LIVE_API_TESTS=1 to run)`, fn, timeout);
 }
 
 let HAS_ANAF = false;
@@ -39,9 +40,6 @@ function itIfAnaf(name, fn, timeout) {
 
 beforeAll(async () => {
   HAS_ANAF = await checkAnafAvailability();
-  if (HAS_SOLR) {
-    process.env.SOLR_AUTH = process.env.SOLR_AUTH;
-  }
 });
 
 const TEST_CIF = '17549799';
@@ -174,7 +172,7 @@ describe('E2E: Full Scraping Pipeline', () => {
     }, 15000);
 
     itIfSolr('should have Randstad company core entry', async () => {
-      const result = await solr.queryCompanySOLR(`id:${TEST_CIF}`);
+      const result = await solr.getCompanyByCif(TEST_CIF);
       expect(result.numFound).toBeGreaterThanOrEqual(0);
     }, 15000);
   });

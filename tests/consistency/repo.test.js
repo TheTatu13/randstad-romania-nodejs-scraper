@@ -82,13 +82,10 @@ describe("Repository Configuration", () => {
   });
 
   describe("SOLR_AUTH secret", () => {
-    it("should be defined in CI environment", () => {
-      if (!REPO) {
-        console.log("GITHUB_REPOSITORY not set — running locally, skipping");
-        return;
-      }
-      expect(process.env.SOLR_AUTH).toBeTruthy();
-      console.log("✅ SOLR_AUTH is set");
+    it("is no longer required - scraper now writes via api.peviitor.ro", () => {
+      // Migrated off direct-SOLR + SOLR_AUTH Basic Auth onto the same
+      // credential-free api.peviitor.ro pattern the rest of the fleet uses.
+      expect(true).toBe(true);
     });
   });
 

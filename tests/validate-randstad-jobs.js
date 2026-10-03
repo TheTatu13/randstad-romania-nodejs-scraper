@@ -22,11 +22,6 @@ async function main() {
   const dryRun = process.argv.includes("--dry-run");
   const doDelete = process.argv.includes("--delete");
 
-  if (!process.env.SOLR_AUTH) {
-    console.log("SOLR_AUTH not set — skipping validation");
-    process.exit(0);
-  }
-
   console.log(`=== Validating ${COMPANY} (CIF: ${CIF}) ===\n`);
 
   const result = await querySOLR(CIF);

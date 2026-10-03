@@ -14,7 +14,7 @@
 
 ## Current Job Listings (80)
 
-_Generated: 2026-10-03T15:39:12.772Z_
+_Generated: 2026-10-03T15:43:48.372Z_
 
 ### supply chain specialist
 
@@ -58,7 +58,7 @@ _Generated: 2026-10-03T15:39:12.772Z_
 - **Location:** București
 - **Status:** scraped
 
-### inside sales engineer with german – it security &amp; data protection
+### inside sales engineer with german – it security &amp;amp; data protection
 
 - **URL:** [https://www.randstad.ro/locuri-de-munca/inside-sales-engineer-with-german-it-security-data-protection_bucuresti_5386/](https://www.randstad.ro/locuri-de-munca/inside-sales-engineer-with-german-it-security-data-protection_bucuresti_5386/)
 - **Location:** București
@@ -350,7 +350,7 @@ _Generated: 2026-10-03T15:39:12.772Z_
 - **Tags:** randstad romania srl, inviitor.ro, office, senior, engineer
 - **Status:** scraped
 
-### Finance &amp;amp; Accounting Coordinator (Hybrid, Bucuresti)
+### Finance &amp;amp;amp; Accounting Coordinator (Hybrid, Bucuresti)
 
 - **URL:** [https://www.randstad.ro/locuri-de-munca/finance-accounting-coordinator-hybrid-bucuresti_bucuresti_5319/](https://www.randstad.ro/locuri-de-munca/finance-accounting-coordinator-hybrid-bucuresti_bucuresti_5319/)
 - **Work Mode:** on-site

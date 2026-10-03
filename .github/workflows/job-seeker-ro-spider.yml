@@ -66,7 +66,14 @@ jobs:
             echo "${BRAND} already exists in company core - no action needed"
           fi
 
-          FINAL=$(curl -s "https://api.peviitor.ro/v1/firme/company/?cif=${CIF_PADDED}" | jq '.data | length')
+          FINAL=0
+          # company/add commits within ~1s; retry so a brand-new company is not reported missing
+          for attempt in 1 2 3 4 5 6; do
+            FINAL=$(curl -s "https://api.peviitor.ro/v1/firme/company/?cif=${CIF_PADDED}" | jq '.data | length')
+            [ "$FINAL" -ge "1" ] && break
+            echo "waiting for company core commit (attempt $attempt)..."
+            sleep 3
+          done
 
           echo "${BRAND} count after check: $FINAL"
 

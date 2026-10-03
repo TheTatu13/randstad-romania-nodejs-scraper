@@ -127,6 +127,8 @@ export async function querySOLR(cif) {
 
 export async function upsertJobs(jobs) {
   if (isDryRun()) { console.log('[dry-run] upsertJobs skipped'); return; }
+  // api.peviitor.ro answers 400 to an empty array; nothing to write means nothing to send.
+  if (!Array.isArray(jobs) || jobs.length === 0) { console.log('No jobs to upsert - skipping upload.'); return { count: 0 }; }
   const url = `${API_BASE_URL}/scraper/jobs/upload/`;
   const paddedJobs = jobs.map(({ _version_, ...job }) => ({ ...job, cif: padCif(job.cif) }));
 

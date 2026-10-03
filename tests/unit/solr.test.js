@@ -141,6 +141,11 @@ describe('solr.js', () => {
       await expect(solr.upsertJobs([testJob])).resolves.not.toThrow();
     });
 
+    it('should skip the upload when there are no jobs', async () => {
+      await expect(solr.upsertJobs([])).resolves.toEqual({ count: 0 });
+      expect(mockFetch).not.toHaveBeenCalled();
+    });
+
     it('should throw on HTTP error', async () => {
       mockFetch.mockResolvedValue(makeErrorResponse(400, 'Bad Request'));
 

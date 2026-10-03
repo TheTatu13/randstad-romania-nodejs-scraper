@@ -160,6 +160,8 @@ const CITY_FROM_SLUG = {
 };
 
 function extractLocationFromUrl(url) {
+  const jr = (url || '').match(/-in-([a-z-]+)-\d+\.html$/);
+  if (jr) { const sl = jr[1]; return CITY_FROM_SLUG[sl] || sl.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
   const m = (url || '').match(/_([a-z-]+)_\d+\/?$/);
   if (!m) return null;
   const slug = m[1];

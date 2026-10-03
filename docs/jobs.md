@@ -12,9 +12,9 @@
 | Careers | [https://www.randstad.ro/jobs/](https://www.randstad.ro/jobs/) |
 | Last Scraped | 2026-10-03 |
 
-## Current Job Listings (84)
+## Current Job Listings (80)
 
-_Generated: 2026-10-03T14:53:35.287Z_
+_Generated: 2026-10-03T15:39:12.772Z_
 
 ### supply chain specialist
 
@@ -58,7 +58,7 @@ _Generated: 2026-10-03T14:53:35.287Z_
 - **Location:** București
 - **Status:** scraped
 
-### inside sales engineer with german – it security & data protection
+### inside sales engineer with german – it security &amp; data protection
 
 - **URL:** [https://www.randstad.ro/locuri-de-munca/inside-sales-engineer-with-german-it-security-data-protection_bucuresti_5386/](https://www.randstad.ro/locuri-de-munca/inside-sales-engineer-with-german-it-security-data-protection_bucuresti_5386/)
 - **Location:** București
@@ -350,7 +350,7 @@ _Generated: 2026-10-03T14:53:35.287Z_
 - **Tags:** randstad romania srl, inviitor.ro, office, senior, engineer
 - **Status:** scraped
 
-### Finance &amp; Accounting Coordinator (Hybrid, Bucuresti)
+### Finance &amp;amp; Accounting Coordinator (Hybrid, Bucuresti)
 
 - **URL:** [https://www.randstad.ro/locuri-de-munca/finance-accounting-coordinator-hybrid-bucuresti_bucuresti_5319/](https://www.randstad.ro/locuri-de-munca/finance-accounting-coordinator-hybrid-bucuresti_bucuresti_5319/)
 - **Work Mode:** on-site
@@ -628,28 +628,4 @@ _Generated: 2026-10-03T14:53:35.287Z_
 - **Work Mode:** on-site
 - **Location:** Cluj-Napoca, Romania
 - **Tags:** randstad romania srl, inviitor.ro, sofer, profesionist, comunitate
-- **Status:** scraped
-
-### Muncitor Necalificat La Asamblarea, Montarea Pieselor
-
-- **URL:** [https://www.jobrapid.ro/locuri-de-munca/muncitor-necalificat-la-asamblarea-montarea-pieselor-in-alba-iulia-1539391.html](https://www.jobrapid.ro/locuri-de-munca/muncitor-necalificat-la-asamblarea-montarea-pieselor-in-alba-iulia-1539391.html)
-- **Location:** Alba Iulia
-- **Status:** scraped
-
-### Marochiner-confectioner Marochinarie, Dupa Comanda
-
-- **URL:** [https://www.jobrapid.ro/locuri-de-munca/marochiner-confectioner-marochinarie-dupa-comanda-in-alba-iulia-1493264.html](https://www.jobrapid.ro/locuri-de-munca/marochiner-confectioner-marochinarie-dupa-comanda-in-alba-iulia-1493264.html)
-- **Location:** Alba Iulia
-- **Status:** scraped
-
-### Tehnician Electromecanic
-
-- **URL:** [https://www.jobrapid.ro/locuri-de-munca/tehnician-electromecanic-in-alba-iulia-1664856.html](https://www.jobrapid.ro/locuri-de-munca/tehnician-electromecanic-in-alba-iulia-1664856.html)
-- **Location:** Alba Iulia
-- **Status:** scraped
-
-### Functionar Administrativ
-
-- **URL:** [https://www.jobrapid.ro/locuri-de-munca/functionar-administrativ-in-alba-iulia-1591653.html](https://www.jobrapid.ro/locuri-de-munca/functionar-administrativ-in-alba-iulia-1591653.html)
-- **Location:** Alba Iulia
 - **Status:** scraped

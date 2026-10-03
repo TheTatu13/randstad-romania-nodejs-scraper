@@ -14,7 +14,7 @@
 
 ## Current Job Listings (34)
 
-_Generated: 2026-10-03T10:53:26.289Z_
+_Generated: 2026-10-03T10:56:21.248Z_
 
 ### tehnician service - echipamente electromecanice
 
@@ -199,19 +199,23 @@ _Generated: 2026-10-03T10:53:26.289Z_
 ### Muncitor Necalificat La Asamblarea, Montarea Pieselor
 
 - **URL:** [https://www.jobrapid.ro/locuri-de-munca/muncitor-necalificat-la-asamblarea-montarea-pieselor-in-alba-iulia-1539391.html](https://www.jobrapid.ro/locuri-de-munca/muncitor-necalificat-la-asamblarea-montarea-pieselor-in-alba-iulia-1539391.html)
+- **Location:** Alba Iulia
 - **Status:** scraped
 
 ### Marochiner-confectioner Marochinarie, Dupa Comanda
 
 - **URL:** [https://www.jobrapid.ro/locuri-de-munca/marochiner-confectioner-marochinarie-dupa-comanda-in-alba-iulia-1493264.html](https://www.jobrapid.ro/locuri-de-munca/marochiner-confectioner-marochinarie-dupa-comanda-in-alba-iulia-1493264.html)
+- **Location:** Alba Iulia
 - **Status:** scraped
 
 ### Tehnician Electromecanic
 
 - **URL:** [https://www.jobrapid.ro/locuri-de-munca/tehnician-electromecanic-in-alba-iulia-1664856.html](https://www.jobrapid.ro/locuri-de-munca/tehnician-electromecanic-in-alba-iulia-1664856.html)
+- **Location:** Alba Iulia
 - **Status:** scraped
 
 ### Functionar Administrativ
 
 - **URL:** [https://www.jobrapid.ro/locuri-de-munca/functionar-administrativ-in-alba-iulia-1591653.html](https://www.jobrapid.ro/locuri-de-munca/functionar-administrativ-in-alba-iulia-1591653.html)
+- **Location:** Alba Iulia
 - **Status:** scraped

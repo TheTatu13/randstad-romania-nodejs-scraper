@@ -173,7 +173,8 @@ describe('E2E: Full Scraping Pipeline', () => {
 
     itIfSolr('should have Randstad company core entry', async () => {
       const result = await solr.getCompanyByCif(TEST_CIF);
-      expect(result.numFound).toBeGreaterThanOrEqual(0);
+      expect(result).toBeTruthy();
+      expect(String(result.id).replace(/^0+/, '')).toBe(TEST_CIF.replace(/^0+/, ''));
     }, 15000);
   });
 });

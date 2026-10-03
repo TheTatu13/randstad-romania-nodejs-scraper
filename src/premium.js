@@ -39,13 +39,16 @@ export async function fetchWithRetry(url, options = {}, retryOptions = {}) {
     baseMs = 2000,
     capMs = 60000,
     maxRetryAfterMs = 120000,
+    timeoutMs = 30000,
     log = console.log
   } = retryOptions;
 
   let lastError;
   for (let attempt = 1; attempt <= retries + 1; attempt++) {
     try {
-      const res = await nodeFetch(url, options);
+      // never hang forever on a stalled connection: default per-attempt timeout
+      const opts = options && options.signal ? options : { ...(options || {}), signal: AbortSignal.timeout(timeoutMs) };
+      const res = await nodeFetch(url, opts);
       if (!RETRYABLE_STATUS.has(res.status) || attempt > retries) return res;
       const retryAfter = parseRetryAfter(res.headers?.get?.("retry-after"));
       const wait = retryAfter !== null ? Math.min(retryAfter, maxRetryAfterMs) : backoffDelay(attempt, baseMs, capMs);

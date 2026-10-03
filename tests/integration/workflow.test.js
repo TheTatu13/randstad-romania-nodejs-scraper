@@ -4,6 +4,8 @@ import fetch from 'node-fetch';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+jest.retryTimes(2, { logErrorsBeforeRetry: true }); // live third-party ANAF/search calls are occasionally slow in CI
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, '../../.env.local') });
 

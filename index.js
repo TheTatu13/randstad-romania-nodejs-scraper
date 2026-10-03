@@ -35,6 +35,7 @@ async function searchRandstad() {
       const cleanTitle = title.replace(/\s+/g, ' ').trim();
       if (cleanTitle.length < 5) return;
       const url = href.startsWith('http') ? href : `https://www.randstad.ro${href}`;
+      if (!/randstad\.ro\/locuri-de-munca\//.test(url)) return;
       if (!jobs.find(j => j.url === url)) {
         jobs.push({ url, title: cleanTitle, source: "randstad.ro" });
       }
@@ -47,6 +48,7 @@ async function searchRandstad() {
       const cleanTitle = title.replace(/\s+/g, ' ').trim();
       if (cleanTitle.length < 5) return;
       const url = href.startsWith('http') ? href : `https://www.randstad.ro${href}`;
+      if (!/randstad\.ro\/locuri-de-munca\//.test(url)) return;
       if (!jobs.find(j => j.url === url)) {
         jobs.push({ url, title: cleanTitle, source: "randstad.ro" });
       }
@@ -103,7 +105,7 @@ async function searchJobRapid(brand) {
 }
 
 function isKnownGoodUrl(url) {
-  return url.includes('mediere.anofm.ro') || url.includes('jobrapid.ro') || url.includes('anofm.ro') || url.includes('randstad.ro');
+  return url.includes('mediere.anofm.ro') || url.includes('jobrapid.ro') || url.includes('anofm.ro') || /randstad\.ro\/locuri-de-munca\//.test(url);
 }
 
 function filterLegitimateJobs(jobs) {
@@ -150,10 +152,25 @@ function extractLocationFromTitle(title) {
   return null;
 }
 
+
+const CITY_FROM_SLUG = {
+  'bucuresti': 'Bucure\u0219ti', 'ploiesti': 'Ploie\u0219ti', 'cluj-napoca': 'Cluj-Napoca', 'brasov': 'Bra\u0219ov',
+  'timisoara': 'Timi\u0219oara', 'iasi': 'Ia\u0219i', 'constanta': 'Constan\u021ba', 'galati': 'Gala\u021bi',
+  'pitesti': 'Pite\u0219ti', 'targu-mures': 'T\u00e2rgu Mure\u0219', 'braila': 'Br\u0103ila', 'bacau': 'Bac\u0103u'
+};
+
+function extractLocationFromUrl(url) {
+  const m = (url || '').match(/_([a-z-]+)_\d+\/?$/);
+  if (!m) return null;
+  const slug = m[1];
+  if (CITY_FROM_SLUG[slug]) return CITY_FROM_SLUG[slug];
+  return slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('-');
+}
+
 function mapToJobModel(rawJob, cif, companyName = COMPANY_NAME) {
   const now = new Date().toISOString();
   const location = [];
-  const locationFromTitle = extractLocationFromTitle(rawJob.title);
+  const locationFromTitle = extractLocationFromTitle(rawJob.title) || extractLocationFromUrl(rawJob.url);
   if (locationFromTitle) {
     location.push(locationFromTitle);
   }

@@ -60,52 +60,8 @@ async function searchRandstad() {
   return jobs;
 }
 
-async function searchJobRapid(brand) {
-  const jobs = [];
-  const urlsToTry = [
-    `https://www.jobrapid.ro/companie/${brand.toLowerCase().replace(/\s+/g, '-')}`,
-    `https://www.jobrapid.ro/companie/sc-${brand.toLowerCase().replace(/\s+/g, '-')}-sa-1219.html`,
-    `https://www.jobrapid.ro/cauta?q=${encodeURIComponent(brand)}`
-  ];
-  for (const searchUrl of urlsToTry) {
-    try {
-      console.log(`Searching jobRapid.ro: ${searchUrl}`);
-      const res = await fetch(searchUrl, {
-        timeout: TIMEOUT,
-        headers: { "User-Agent": "job_seeker_ro_spider" }
-      });
-      if (!res.ok) {
-        console.log(`  jobRapid.ro returned ${res.status} for ${searchUrl}`);
-        continue;
-      }
-      const html = await res.text();
-      const $ = cheerio.load(html);
-      $('a[href*="/locuri-de-munca/"]').each((i, el) => {
-        const href = $(el).attr('href');
-        const title = $(el).text().trim();
-        if (!href || !title) return;
-        const slug = href.replace(/^https?:\/\/[^\/]+/, '').replace(/^\//, '');
-        const parts = slug.split('/');
-        if (parts.length < 2) return;
-        const path = parts.slice(1).join('/');
-        if (/^\s*(cauta|login|cont|compani[ei]|aplicat|salvat|contact|setari|termeni|confidentialitate|sitemap|ajutor|intrebari|facebook|linkedin|google|instagram|twitter)/i.test(path)) return;
-        if (path.includes('/')) return;
-        if (path.length < 15) return;
-        const url = href.startsWith('http') ? href : `https://www.jobrapid.ro${href}`;
-        if (!jobs.find(j => j.url === url)) {
-          jobs.push({ url, title, source: "jobRapid.ro" });
-        }
-      });
-      console.log(`  Found ${jobs.length} jobs on jobRapid.ro (from ${searchUrl})`);
-    } catch (err) {
-      console.log(`  jobRapid.ro error for ${searchUrl}: ${err.message}`);
-    }
-  }
-  return jobs;
-}
-
 function isKnownGoodUrl(url) {
-  return url.includes('mediere.anofm.ro') || url.includes('jobrapid.ro') || url.includes('anofm.ro') || /randstad\.ro\/locuri-de-munca\//.test(url);
+  return url.includes('mediere.anofm.ro') || url.includes('anofm.ro') || /randstad\.ro\/locuri-de-munca\//.test(url);
 }
 
 function filterLegitimateJobs(jobs) {
@@ -115,9 +71,10 @@ function filterLegitimateJobs(jobs) {
 async function searchAllPortals(brand, testOnly = false) {
   console.log(`\n=== Searching job portals for "${brand}" ===\n`);
   const allJobs = [];
+  // NOTE: jobRapid.ro was removed as a source: jobRapid's company page "sc-randstad-sa-1219" is actually
+  // RAPEL SRL's page, so its jobs were Rapel's (and flip-flopped CIF ownership with the rapel scraper).
   const searches = [
-    searchRandstad(),
-    searchJobRapid(brand)
+    searchRandstad()
   ];
   const results = await Promise.allSettled(searches);
   for (const result of results) {

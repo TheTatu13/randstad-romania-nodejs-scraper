@@ -72,7 +72,7 @@ describe('E2E: Full Scraping Pipeline', () => {
     it('should have source annotation on each job', () => {
       for (const job of jobs) {
         expect(job).toHaveProperty('source');
-        expect(['randstad.ro', 'jobRapid.ro']).toContain(job.source);
+        expect(['randstad.ro']).toContain(job.source);
       }
     });
   });

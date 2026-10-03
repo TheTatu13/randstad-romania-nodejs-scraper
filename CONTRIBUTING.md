@@ -4,12 +4,12 @@ Thank you for your interest in contributing!
 
 ## 📐 This Repo Is a Template
 
-This is the **Randstad Romania scraper** for the peviitor.ro ecosystem. It is derived from the [EPAM reference implementation](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper). New scrapers for other Romanian companies should follow the same patterns.
+This is the **Randstad Romania scraper** for the peviitor.ro ecosystem. It is derived from the [EPAM reference implementation](https://github.com/peviitor-scrapers/epam-systems-international-srl-nodejs-scraper). New scrapers for other Romanian companies should follow the same patterns.
 
 > **✅ Validated in production.** These derived scrapers follow this exact checklist:
-> - [mejix-srl-nodejs-scraper](https://github.com/sebiboga/mejix-srl-nodejs-scraper) — MEJIX S.R.L. (HTML/cheerio, single-page)
-> - [talent-matchmakers-srl-nodejs-scraper](https://github.com/sebiboga/talent-matchmakers-srl-nodejs-scraper) — TALENT MATCHMAKERS S.R.L. (Teamtailor HTML/cheerio)
-> - [principal33-srl-nodejs-scraper](https://github.com/sebiboga/principal33-srl-nodejs-scraper) — PRINCIPAL33 S.R.L. (Personio JSON API)
+> - [mejix-srl-nodejs-scraper](https://github.com/peviitor-scrapers/mejix-srl-nodejs-scraper) — MEJIX S.R.L. (HTML/cheerio, single-page)
+> - [talent-matchmakers-srl-nodejs-scraper](https://github.com/peviitor-scrapers/talent-matchmakers-srl-nodejs-scraper) — TALENT MATCHMAKERS S.R.L. (Teamtailor HTML/cheerio)
+> - [principal33-srl-nodejs-scraper](https://github.com/peviitor-scrapers/principal33-srl-nodejs-scraper) — PRINCIPAL33 S.R.L. (Personio JSON API)
 > Use them as references if anything below is unclear.
 
 ## Deriving a New Scraper for Another Company
@@ -100,7 +100,7 @@ npm test
 
 ## Reporting Issues
 
-Open a [GitHub Issue](https://github.com/sebiboga/randstad-romania-nodejs-scraper/issues) with:
+Open a [GitHub Issue](https://github.com/peviitor-scrapers/randstad-romania-nodejs-scraper/issues) with:
 - Clear description of the problem
 - Steps to reproduce
 - Expected vs actual behavior

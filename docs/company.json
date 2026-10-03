@@ -5,5 +5,5 @@
   "website": "https://www.randstad.ro",
   "careerUrl": "https://www.randstad.ro/jobs/",
   "defaultLocation": "București",
-  "scraperFile": "https://raw.githubusercontent.com/TheTatu13/randstad-romania-nodejs-scraper/main/.github/workflows/job-seeker-ro-spider.yml"
+  "scraperFile": "https://raw.githubusercontent.com/peviitor-scrapers/randstad-romania-nodejs-scraper/main/.github/workflows/job-seeker-ro-spider.yml"
 }

@@ -22,7 +22,7 @@ job_seeker_ro_spider
 3. **Scrape-uiește job-urile** — extrage lista de job-uri de pe randstad.ro și jobRapid.ro prin HTML scraping (cheerio)
 4. **Transformă datele** — normalizează locațiile, păstrează job-urile existente din surse cunoscute
 5. **Stochează în SOLR** — șterge job-urile vechi și upsert în `job` core + `company` core
-6. **Generează docs/jobs.md** — fișier markdown cu informații companie + toate job-urile curente, publicat pe [GitHub Pages](https://thetatu13.github.io/randstad-romania-nodejs-scraper/jobs.md)
+6. **Generează docs/jobs.md** — fișier markdown cu informații companie + toate job-urile curente, publicat pe [GitHub Pages](https://peviitor-scrapers.github.io/randstad-romania-nodejs-scraper/jobs.md)
 
 ## Structură proiect
 

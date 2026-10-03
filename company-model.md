@@ -25,4 +25,4 @@
 - Fields marked `string[]` are multi-valued arrays stored as arrays in SOLR/OpenSearch
 - Company status "activ" means jobs should be kept, otherwise remove jobs
 - website and career should be canonical URLs without trailing slash
-- **scraperFile**: Full URL to GitHub raw workflow YML (e.g. `https://raw.githubusercontent.com/sebiboga/randstad-romania-nodejs-scraper/main/.github/workflows/job-seeker-ro-spider.yml`)
+- **scraperFile**: Full URL to GitHub raw workflow YML (e.g. `https://raw.githubusercontent.com/peviitor-scrapers/randstad-romania-nodejs-scraper/main/.github/workflows/job-seeker-ro-spider.yml`)

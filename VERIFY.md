@@ -41,7 +41,7 @@ Pentru fiecare workflow din `.github/workflows/`:
    curl --user "${SOLR_AUTH}" "https://solr.peviitor.ro/solr/job/select?q=cif:CIF&rows=10"
    ```
 5. Verifică că `docs/jobs.md` a fost generat și este accesibil:
-   - https://sebiboga.github.io/randstad-romania-nodejs-scraper/jobs.md
+   - https://peviitor-scrapers.github.io/randstad-romania-nodejs-scraper/jobs.md
 6. Verifică pe https://peviitor.ro că job-urile sunt vizibile
 
 ## 4. Final

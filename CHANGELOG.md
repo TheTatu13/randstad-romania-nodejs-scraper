@@ -8,20 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.5.1] - 2026-06-21
 
 ### Added
-- README "Derived Scrapers": added [ulma-packaging-srl-nodejs-scraper](https://github.com/sebiboga/ulma-packaging-srl-nodejs-scraper) (ULMA PACKAGING S.R.L., CIF 47978792, TalentClue HTML + ANOFM)
+- README "Derived Scrapers": added [ulma-packaging-srl-nodejs-scraper](https://github.com/peviitor-scrapers/ulma-packaging-srl-nodejs-scraper) (ULMA PACKAGING S.R.L., CIF 47978792, TalentClue HTML + ANOFM)
 
 ## [1.5.0] - 2026-06-18
 
 ### Added
 - `AI-DERIVATION-GUIDE.md` — comprehensive playbook for AI agents deriving a new scraper from this template. Consolidates lessons learned from 4 derivations (MEJIX, Talent Matchmakers, Artsoft, Continental Hotels) including 9 documented pitfalls and references to all source issues.
 - `AGENTS.md` and `CONTRIBUTING.md` now reference the guide so AI agents discover it first.
-- README "Derived Scrapers": added [rapel-srl-nodejs-scraper](https://github.com/sebiboga/rapel-srl-nodejs-scraper) (RAPEL SRL, CIF 5665609, jobRapid.ro HTML)
+- README "Derived Scrapers": added [rapel-srl-nodejs-scraper](https://github.com/peviitor-scrapers/rapel-srl-nodejs-scraper) (RAPEL SRL, CIF 5665609, jobRapid.ro HTML)
 - README "Derived Scrapers": documented two new pitfalls discovered during RAPEL derivation (ANAF brand search vs CIF lookup, SOLR `_version_` conflict on re-upsert)
 
 ## [1.4.3] - 2026-06-17
 
 ### Added
-- README: "Derived Scrapers" section listing [mejix-srl-nodejs-scraper](https://github.com/sebiboga/mejix-srl-nodejs-scraper) as first known derivative, with lessons learned from the first derivation
+- README: "Derived Scrapers" section listing [mejix-srl-nodejs-scraper](https://github.com/peviitor-scrapers/mejix-srl-nodejs-scraper) as first known derivative, with lessons learned from the first derivation
 - CONTRIBUTING: "Validated in production" callout pointing to MEJIX as a working reference
 
 ### Verified

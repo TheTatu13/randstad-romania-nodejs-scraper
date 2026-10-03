@@ -318,7 +318,8 @@ async function main() {
       cif: cif,
       company: COMPANY_NAME,
       date: new Date().toISOString(),
-      status: job.status || "scraped"
+      status: job.status || "scraped",
+      location: (job.location && job.location.length) ? job.location : (extractLocationFromUrl(job.url) ? [extractLocationFromUrl(job.url)] : job.location)
     }));
     const newJobs = uniquePortalJobs.map(job => mapToJobModel(job, cif));
 

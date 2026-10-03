@@ -14,7 +14,7 @@
 
 ## Current Job Listings (34)
 
-_Generated: 2026-10-03T10:56:21.248Z_
+_Generated: 2026-10-03T11:06:32.404Z_
 
 ### tehnician service - echipamente electromecanice
 

@@ -17,19 +17,23 @@ function itIfSolr(name, fn, timeout) {
   return it.skip(`${name} (skipped: set RUN_LIVE_API_TESTS=1 to run)`, fn, timeout);
 }
 
-let HAS_ANAF = false;
-
 async function checkAnafAvailability() {
   try {
-    const res = await fetch('https://demoanaf.ro/api/search?q=test', {
-      method: 'HEAD',
-      signal: AbortSignal.timeout(5000)
+    // Probe the official ANAF endpoint: the last link of the getCompanyFromANAF fallback chain.
+    const res = await fetch('https://webservicesp.anaf.ro/api/PlatitorTvaRest/v9/tva', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify([{ cui: 5665609, data: new Date().toISOString().slice(0, 10) }]),
+      signal: AbortSignal.timeout(10000)
     });
     return res.ok;
   } catch {
     return false;
   }
 }
+
+// Top-level await: itIfAnaf() is evaluated at collection time, before any beforeAll runs.
+const HAS_ANAF = await checkAnafAvailability();
 
 function itIfAnaf(name, fn, timeout) {
   if (HAS_ANAF) {
@@ -42,7 +46,6 @@ let COMPANY_CONFIG;
 const COMPANY_CIF = '17549799';
 
 beforeAll(async () => {
-  HAS_ANAF = await checkAnafAvailability();
   const mod = await import('../../config/company.js');
   COMPANY_CONFIG = mod.default;
 });
